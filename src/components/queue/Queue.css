@@ -1,0 +1,8 @@
+.Main-Queue {
+    display: inline-flex;
+    align-items: flex-end;
+    margin: 5px 5px 0px 5px;
+    height: calc(100% - 150px);
+    width: calc(30% - 20px);
+    background-color: azure;
+}
