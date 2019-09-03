@@ -1,0 +1,57 @@
+.QueueItem {
+    display: table;
+    margin: 5px 0px 5px 0px;
+    height: 80px;
+    width: 100%;
+    text-align: left;
+    background-color: #ffffff3d;
+    border: 1px solid white;
+    border-radius: 8px;
+    font-family: "Al Bayan";
+    font-style: normal;
+    font-size: 1.3em;
+    cursor: pointer;
+}
+
+.QueueItem div {
+    margin: 5px;
+    padding: 0px;
+    display: table-cell;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+}
+
+.QueueItem .itemName {
+    max-width: 200px;
+}
+
+.QueueItem img {
+    margin: 5px;
+    text-align: left;
+    box-sizing: border-box;
+    max-height: 80px;
+}
+
+.itemPoints {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: black;
+    background-color: #1863b7;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+.itemDelete {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: black;
+    background-color: #841d0a;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    z-index: 4;
+}
+

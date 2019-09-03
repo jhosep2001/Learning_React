@@ -1,8 +1,46 @@
 .Main-Queue {
-    display: inline-flex;
-    align-items: flex-end;
-    margin: 5px 5px 0px 5px;
-    height: calc(100% - 150px);
-    width: calc(30% - 20px);
-    background-color: azure;
+    display: inline-block;
+    vertical-align: top;
+    width: calc(30% - 10px);
+    height: calc(100% - 80px);
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    margin-left: 10px;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+    overflow-y: auto;
+}
+
+.Main-Queue > span {
+    font-weight: bold;
+    font-size: 2em;
+    z-index: 3;
+    color: white;
+    letter-spacing: 3px;
+}
+
+.Main-Queue .searchInput {
+    width: calc(100% - 35px);
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0px;
+}
+
+@media (max-device-width: 1224px) {
+    .Main-Queue {
+        width: calc(100% - 10px);
+        height: 80vh;
+        display: block;
+        vertical-align: top;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 2;
+        border-bottom-left-radius: 20px;
+        border-top-left-radius: 20px;
+        overflow-y: auto;
+    }
+
+    .Main-Queue > span {
+        font-size: 1em;
+    }
 }
