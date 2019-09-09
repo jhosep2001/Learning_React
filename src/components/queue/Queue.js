@@ -8,14 +8,33 @@ class Queue extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            "queueVideos": [],
-            "actualVideo": "PMivT7MJ41M"
+            apiKey: "",
+            queueVideos: [],
+            actualVideo: ""
         }
     };
 
     componentDidMount() {
-        let videos = ["r2g0pM3PMNQ", "1Jw_mhoCiFY", "bE3ABNHDnAc"];
-        this.setState({queueVideos: videos});
+        fetch("http://localhost:8080/getQueue/"+this.props.listName, {method: "GET"})
+            .then(function (response) {
+                return response.json();
+            }).then(data => {
+                if(data.videosId.length > 0) {
+                    let queueVideos = data.videosId.map( video => video.videoid);
+                    this.setState({queueVideos});
+                    fetch("http://localhost:8080/apiKey", {method: "GET"})
+                        .then(response => response.json())
+                        .then(data => {
+                            this.setState({apiKey: data.key});
+                        })
+                        .catch(function (error) {
+                            console.log("error getting apiKey");
+                        });
+                }
+            })
+            .catch(function (error) {
+               console.log("Error getting queue for list", error);
+            });
     }
 
     nextVideo = () => {
@@ -38,9 +57,17 @@ class Queue extends Component {
     render() {
         const items = this.state.queueVideos.map((video, videoId) => {
             return (
-                <QueueItem changeVideo={this.changeVideo} removeVideo={this.removeVideo} key={videoId} videoId={video}></QueueItem>
+                <QueueItem apiKey={this.state.apiKey}
+                           changeVideo={this.changeVideo}
+                           removeVideo={this.removeVideo}
+                           key={videoId}
+                           videoId={video}>
+                </QueueItem>
             );
         });
+
+        const noContent =
+            (<div className="EmptyQueue"> No Queue Videos on this List</div>);
 
         return (
             <div className="Main-Queue">
@@ -48,7 +75,7 @@ class Queue extends Component {
                 <div>
                     <input className="searchInput" type="text" placeholder="Search"/>
                 </div>
-                {items}
+                {items.length > 0? items: noContent}
             </div>
         );
     }

@@ -27,6 +27,13 @@
     margin: 10px 0px;
 }
 
+.EmptyQueue {
+    font-size: 2em;
+    text-align: center;
+    position: relative;
+    top: 30%;
+}
+
 @media (max-device-width: 1224px) {
     .Main-Queue {
         width: calc(100% - 10px);

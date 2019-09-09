@@ -9,19 +9,19 @@ import React, { Component} from 'react';
 import MediaQuery from "react-responsive";
 
 class App extends Component {
+    state = {
+        listName: ""
+    };
+
     constructor(props){
       super(props);
       this.visualizer = React.createRef();
       this.queue = React.createRef();
-      fetch("http://localhost:8080/", {
-          mode: "cors",
-          method: "GET"
-      })
-          .then(response => response.json())
-          .then(data => {
-              console.log(data)
-          });
     }
+
+    changeList = (listName) => {
+        this.setState({listName})
+    };
 
     changeVideo = (videoId) => {
         this.visualizer.current.changeVideo(videoId);
@@ -34,25 +34,27 @@ class App extends Component {
   render() {
         return (
             <div className="App">
-                <div className="modal">
-                    <Router>
-                        <Switch>
-                            <Route path="/" exact>
-                                <Header></Header>
-                                <Welcome></Welcome>
-                            </Route>
-                            <Route path="/videoList/:id">
-                                <Header ></Header>
-                                <div className="Content">
-                                    <MediaQuery query='(min-device-width: 1224px)'>
-                                        <Visualizer nextVideo={this.nextVideo} ref={this.visualizer}></Visualizer>
-                                    </MediaQuery>
-                                    <Queue changeVideo={this.changeVideo} ref={this.queue}></Queue>
-                                </div>
-                            </Route>
-                        </Switch>
-                    </Router>
-                </div>
+                <Router>
+                    <Switch>
+                        <Route path="/" exact>
+                            <Header listName={this.state.listName}></Header>
+                            <Welcome changeList={this.changeList}></Welcome>
+                        </Route>
+                        <Route path="/videoList/:id">
+                            <Header listName={this.state.listName}></Header>
+                            <div className="Content">
+                                <MediaQuery query='(min-device-width: 1224px)'>
+                                    <Visualizer nextVideo={this.nextVideo} ref={this.visualizer}></Visualizer>
+                                </MediaQuery>
+                                <Queue
+                                    listName={this.state.listName}
+                                    changeVideo={this.changeVideo}
+                                    ref={this.queue}>
+                                </Queue>
+                            </div>
+                        </Route>
+                    </Switch>
+                </Router>
             </div>
         );
   }

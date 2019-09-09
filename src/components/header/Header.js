@@ -5,11 +5,11 @@ import './Header.css';
 class Header extends Component {
 
     headerText = () => {
-        let url = window.location.pathname;
-        if(url === ("/")) {
+        let name = this.props.listName;
+        if(name === "") {
             return "Music Control React Project";
         } else {
-            return url.split("/videoList/")[1] + " Video List";
+            return name+" Video List";
         }
 
     };

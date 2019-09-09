@@ -3,8 +3,6 @@ import './QueueItem.css';
 
 
 class QueueItem extends Component {
-
-    key="AIzaSyBcFNflNCSHxOgfF_2wy1gW9LGrClPDhHA";
     url = "https://www.googleapis.com/youtube/v3";
     state = {
         data: {},
@@ -14,24 +12,26 @@ class QueueItem extends Component {
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.videoId !== this.props.videoId) {
+        if(prevProps.videoId !== this.props.videoId || prevProps.apiKey !== this.props.apiKey) {
             this.getVideoInfo();
         }
     }
 
     componentDidMount() {
-       this.getVideoInfo();
+        this.getVideoInfo();
      }
 
     getVideoInfo = () => {
-        let param = "id="+this.props.videoId+"&part=snippet&maxResult=1&key="+this.key;
-        fetch(this.url+'/videos?'+param)
-            .then(response => response.json())
-            .then(data => {
-                this.setState({data});
-                this.setState({videoImage: data.items[0].snippet.thumbnails.high.url});
-                this.setState({videoName: data.items[0].snippet.title});
-            });
+        if(this.props.apiKey && this.props.apiKey !== "") {
+            let param = "id="+this.props.videoId+"&part=snippet&maxResult=1&key="+this.props.apiKey;
+            fetch(this.url+'/videos?'+param)
+                .then(response => response.json())
+                .then(data => {
+                    this.setState({data});
+                    this.setState({videoImage: data.items[0].snippet.thumbnails.high.url});
+                    this.setState({videoName: data.items[0].snippet.title});
+                });
+        }
     };
 
      changeVideo = () => {

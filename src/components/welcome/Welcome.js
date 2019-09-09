@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import MediaQuery from 'react-responsive';
 import { Link } from 'react-router-dom';
+import "./Welcome.css";
 
 class Welcome extends Component {
     constructor(props) {
@@ -27,8 +28,10 @@ class Welcome extends Component {
             event.stopPropagation();
             let error = this.newListInput.current.name + "Error";
             this.setState({[error]: true});
+        } else {
+            //validate not exist same name list
+            this.props.changeList(this.state.newListName);
         }
-        //validate not exist same name list
     };
 
     verifiedAdmin = (event) => {
@@ -42,31 +45,34 @@ class Welcome extends Component {
             event.stopPropagation();
             let error = this.nameInput.current.name + "Error";
             this.setState({[error]: true});
+        } else {
+            this.props.changeList(this.state.listName);
         }
     };
 
     render() {
         return(
-            <>
-                <div>
-                    <MediaQuery query='(min-device-width: 1224px)'>
-                        <div>
-                            <h1>Create a new list, Just for pc</h1>
-                            <input type="text"
-                                   placeholder="Give us a name for your list"
-                                   onChange={this.onChange}
-                                   style={this.state.newListNameError ? this.inputStyleError :  this.inputStyle }
-                                   ref={this.newListInput}
-                                   name = "newListName"
-                                   value={this.state.newListName}
-                            />
-                            <br/>
-                            <Link to={"/videoList/"+this.state.newListName} onClick={this.newList}><button>Create</button></Link>
+            <div className="cardContainer">
+                <MediaQuery query='(min-device-width: 1224px)'>
+                    <div className="createListContainer">
+                        <h3>Create a new list, Just for pc</h3>
+                        <input type="text"
+                               placeholder="Give us a name for your list"
+                               onChange={this.onChange}
+                               style={this.state.newListNameError ? this.inputStyleError :  this.inputStyle }
+                               ref={this.newListInput}
+                               name = "newListName"
+                               value={this.state.newListName}
+                        />
+                        <div className="buttonContainer">
+                           <Link to={"/videoList/"+this.state.newListName} onClick={this.newList}>
+                               <button id="createButton">Create</button>
+                           </Link>
                         </div>
-                    </MediaQuery>
-                </div>
-                <div>
-                    <h1>Enter to a created List</h1>
+                    </div>
+                </MediaQuery>
+                <div className="existedListContainer">
+                    <h3>Enter to a created List</h3>
                     <input type="text"
                            placeholder="Name of the list"
                            onChange={this.onChange}
@@ -75,16 +81,21 @@ class Welcome extends Component {
                            name = "listName"
                            value={this.state.listName}
                     />
-                    <br/>
-                    <Link to={"/videoList/"+this.state.listName} onClick={this.verifiedAdmin} > <button>Admin</button> </Link>
-                    <Link to={"/videoList/"+this.state.listName} onClick={this.validate} > <button>Collaborator</button> </Link>
+                    <div className="buttonContainer">
+                        <Link to={"/videoList/"+this.state.listName} onClick={this.verifiedAdmin} >
+                            <button id="adminButton">Admin</button>
+                        </Link>
+                        <Link to={"/videoList/"+this.state.listName} onClick={this.validate} >
+                            <button id="collaboratorButton">Collaborator</button>
+                        </Link>
+                    </div>
                 </div>
-            </>
+            </div>
         );
     }
 
     inputStyle = {
-            border: "1px solid gray",
+            border: "none",
             borderRadius: "5px",
             padding: "5px",
             outline: "none"
